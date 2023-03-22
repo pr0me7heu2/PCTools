@@ -60,15 +60,27 @@ function updateResolutions() {
   // iterate through arrays using values as rows
   // along with known column numbers to set
   // cell to true / false as appropriate
+
+  // if resolution was through a location change, also clears the need
+  // to do a location change
   while(invChanges.length != 0){
     var invPop = invChanges.pop();
     // setting inventory 
     inventory.getRange(invPop,18).setValue("TRUE"); // r 18th letter
+
+    // update location
+    if(inventory.getRange(invPop,13)) {
+      inventory.getRange(invPop,13).setValue("FALSE");  // m 13th column
+      // set Stlv1 to new location
+      inventory.getRange(invPop,1).setValue(inventory.getRange(invPop,14).getDisplayValue());
+      // reset new location
+      inventory.getRange(invPop,14).setValue("");}
+
     var resPop = resChanges.pop();
     // resetting "(AI) Located, Not Rslvd"
     resolved.getRange(resPop,4).setValue("FALSE")
   }
-
+    
   return;
 }
 
@@ -119,8 +131,6 @@ function updateResolutions() {
     // resetting "(AI) Located, Not Rslvd"
     changes.getRange(chgPop,4).setValue("FALSE")
   }
-
-   
    return;
  }
 
@@ -178,5 +188,4 @@ function updateResolutions() {
    
    return;
 }
-
 
