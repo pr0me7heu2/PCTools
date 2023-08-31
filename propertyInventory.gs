@@ -69,7 +69,7 @@ function updateResolutions() {
     inventory.getRange(invPop,18).setValue("TRUE"); // r 18th letter
 
     // update location
-    if(inventory.getRange(invPop,13)) {
+    if(inventory.getRange(invPop,13)=="TRUE") {
       inventory.getRange(invPop,13).setValue("FALSE");  // m 13th column
       // set Stlv1 to new location
       inventory.getRange(invPop,1).setValue(inventory.getRange(invPop,14).getDisplayValue());
@@ -188,4 +188,3 @@ function updateResolutions() {
    
    return;
 }
-
