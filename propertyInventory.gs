@@ -140,7 +140,7 @@ function updateResolutions() {
 // showing on previous users, then there was an item on the left not 
 // removed under their username in sunflower
  function updateUsers() {
-   //Logger.log("users");
+   Logger.log("users");
    
    var changes = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("User & Location Changes");
    var inventory = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Inventory"); 
@@ -161,8 +161,10 @@ function updateResolutions() {
       // TODO make main function
       var barcodeRange = changes.getRange(changesRow,7); // column G
       var barcode = barcodeRange.getValues()[0][0];
-      var SHTvalues = inventory.createTextFinder(barcode).findAll();
+      var SHTvalues = inventory.createTextFinder(barcode).matchEntireCell(true).findAll();
+      //Logger.log(SHTvalues);
       var result = SHTvalues.map(r => [(r.getRow()),( r.getColumn())]);
+      //Logger.log(result);
       invChanges.push(result[0][0]);
     }
   }
@@ -177,9 +179,9 @@ function updateResolutions() {
     //Logger.log(inventory.getRange(invPop,10).getDisplayValue());
     //Logger.log(inventory.getRange(invPop,12).getDisplayValue());
     // reset new user
-    inventory.getRange(invPop,11).setValue("");
+    inventory.getRange(invPop,11).setValue(""); //reset change user
     //Logger.log(inventory.getRange(invPop,11).getDisplayValue());
-
+    inventory.getRange(invPop,12).setValue(""); //reset new user
     var chgPop = changedChanges.pop();
     // resetting user changes
     changes.getRange(chgPop,13).setValue("FALSE")
